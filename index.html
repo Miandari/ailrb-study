@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AILRB - AI Literature Review Benchmark Study</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0A6E75;
+            --secondary: #4A4A4A;
+            --accent: #F0B323;
+            --light-bg: #FAFAFA;
+            --white: #FFFFFF;
+            --light-gray: #E8E8E8;
+            --success: #4CAF50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--secondary);
+            background-color: var(--light-bg);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #0A8E95 100%);
+            color: var(--white);
+            padding: 8rem 2rem 4rem;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+        }
+
+        .institution-tag {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .phase-diagram {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .phase {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-number {
+            background: var(--primary);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .phase-active .phase-number {
+            background: var(--accent);
+            color: var(--secondary);
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .member-name {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Contribution Form */
+        .form-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            color: var(--white);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .step.active .step-number {
+            background: var(--primary);
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+        }
+
+        .step-title {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        .form-step-content {
+            display: none;
+        }
+
+        .form-step-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .timeline-item.current::before {
+            background: var(--accent);
+            box-shadow: 0 0 0 3px rgba(240, 179, 35, 0.3);
+        }
+
+        .timeline-date {
+            min-width: 150px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            color: var(--secondary);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">AIRLB Study</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contribute">Contribute</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Benchmarking AI in Scientific Literature Reviews</h1>
+        <p>A collaborative research study evaluating the effectiveness of AI-assisted workflows for conducting scientific literature reviews</p>
+        <div class="institution-tag">Led by researchers from the University of Toronto, Department of Psychology</div>
+        <div class="cta-buttons">
+            <a href="#contribute" class="btn btn-primary">Contribute Your Research</a>
+            <a href="#about" class="btn btn-secondary">Learn More</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">About the Study</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Mission</h3>
+                <p>We are conducting a systematic evaluation of AI and AI-assisted workflows for scientific literature reviews. By comparing AI-only and human-AI collaborative approaches against expert-led research, we aim to establish benchmarks for AI performance in academic research.</p>
+                
+                <h3>Why This Matters</h3>
+                <p>As AI tools become increasingly prevalent in research, understanding their capabilities and limitations in literature review tasks is crucial for the scientific community. This study will provide empirical evidence about the effectiveness of AI assistance in research workflows.</p>
+
+                <h3>Your Contribution</h3>
+                <p>We are seeking unpublished or near-complete literature reviews from active researchers in experimental psychology, neuroscience, and related fields. Your work will serve as the gold standard for evaluating AI performance.</p>
+            </div>
+            
+            <div class="phase-diagram">
+                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Study Phases</h3>
+                <div class="phase phase-active">
+                    <div class="phase-number">1</div>
+                    <div>
+                        <strong>Problem Set Curation</strong> (Current Phase)
+                        <p>Collecting expert literature reviews and evaluation rubrics</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-number">2</div>
+                    <div>
+                        <strong>Hackathon Execution</strong>
+                        <p>Participants use AI tools to generate literature reviews</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-number">3</div>
+                    <div>
+                        <strong>Quality Assessment</strong>
+                        <p>Systematic evaluation of AI-generated reviews</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section" style="background-color: var(--white);">
+        <h2 class="section-title">Research Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-avatar">PI</div>
+                <div class="member-name">Principal Investigator</div>
+                <div class="member-role">Department of Psychology<br>University of Toronto</div>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">CM</div>
+                <div class="member-name">Co-Investigator</div>
+                <div class="member-role">Neuroscience<br>University of Toronto</div>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">RA</div>
+                <div class="member-name">Research Associate</div>
+                <div class="member-role">Experimental Psychology<br>University of Toronto</div>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">GS</div>
+                <div class="member-name">Graduate Student</div>
+                <div class="member-role">Cognitive Science<br>University of Toronto</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section id="contribute" class="section">
+        <h2 class="section-title">Contribute Your Research</h2>
+        <div class="form-container">
+            <div class="form-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Basic Info</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Research Details</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Submit</div>
+                </div>
+            </div>
+
+            <form id="contributionForm">
+                <!-- Step 1 -->
+                <div class="form-step-content active" id="step1">
+                    <div class="form-group">
+                        <label>Your Name *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Institution *</label>
+                        <input type="text" name="institution" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Field of Study *</label>
+                        <select name="field" required>
+                            <option value="">Select your field</option>
+                            <option>Experimental Psychology</option>
+                            <option>Cognitive Neuroscience</option>
+                            <option>Behavioral Neuroscience</option>
+                            <option>Cognitive Science</option>
+                            <option>Clinical Psychology</option>
+                            <option>Other (Psychology-related)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="form-step-content" id="step2">
+                    <div class="form-group">
+                        <label>Primary Research Question *</label>
+                        <textarea name="question" rows="3" required placeholder="Brief summary of your research question"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Key Themes/Arguments *</label>
+                        <textarea name="themes" rows="4" required placeholder="Outline the main themes, arguments, or debates you're addressing"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Key Citations</label>
+                        <input type="number" name="citations" placeholder="Approximate number">
+                    </div>
+                    <div class="form-group">
+                        <label>Research Stage *</label>
+                        <select name="stage" required>
+                            <option value="">Select stage</option>
+                            <option>Draft complete</option>
+                            <option>Near submission</option>
+                            <option>Under review</option>
+                            <option>Accepted (not published)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="form-step-content" id="step3">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="consent" required>
+                            I agree that my literature review will be used as a benchmark for this study, with all materials handled confidentially.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="authorship">
+                            I am interested in being considered for authorship on the resulting publication.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Comments</label>
+                        <textarea name="comments" rows="3" placeholder="Any additional information you'd like to share"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-secondary" id="prevBtn" style="display:none;">Previous</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn" style="display:none;">Submit Contribution</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="section" style="background-color: var(--white);">
+        <h2 class="section-title">Project Timeline</h2>
+        <div class="timeline">
+            <div class="timeline-item current">
+                <div class="timeline-date">Now - [Date]</div>
+                <div>Collecting expert literature reviews from researchers</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">[Date]</div>
+                <div>Deadline for literature review submissions</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">TBD</div>
+                <div>Hackathon announcement and registration opens</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">TBD</div>
+                <div>Hackathon event</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">TBD</div>
+                <div>Results analysis and publication</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <div class="faq-question">How will my research be used?</div>
+            <div class="faq-answer">Your literature review will serve as a gold standard benchmark. We will use it to evaluate how well AI-assisted methods can identify key papers, themes, and arguments in your field. Your work will be handled with complete confidentiality and will not be shared publicly.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">What recognition will I receive?</div>
+            <div class="faq-answer">Contributors will be offered authorship on the resulting publication. Your expertise and contribution will be formally acknowledged, and the publication will bring additional visibility to your research area.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Can I participate if my paper is under review?</div>
+            <div class="faq-answer">Yes! We accept literature reviews at any stage before publication, including those under review. We only require that the work has not been publicly published yet.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">How much time commitment is required?</div>
+            <div class="faq-answer">Minimal! We only need you to provide: (1) a brief summary of your research question, (2) an outline of key themes/arguments, and (3) a list of critical citations or bibliography. This typically takes 15-30 minutes.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Who can participate in the hackathon?</div>
+            <div class="faq-answer">The hackathon will be open to graduate students, postdocs, and researchers. Details about registration and eligibility will be announced after we complete the literature review collection phase.</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 AI Literature Review Benchmark Study | University of Toronto</p>
+        <p>Contact: airlb.study@[yourdomain].ca</p>
+    </footer>
+
+    <script>
+        // Multi-step form functionality
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show current step
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((stepEl, index) => {
+                stepEl.classList.remove('active', 'completed');
+                if (index + 1 === step) {
+                    stepEl.classList.add('active');
+                } else if (index + 1 < step) {
+                    stepEl.classList.add('completed');
+                }
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = step === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').style.display = step === totalSteps ? 'none' : 'block';
+            document.getElementById('submitBtn').style.display = step === totalSteps ? 'block' : 'none';
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        // Form submission
+        document.getElementById('contributionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your contribution! We will contact you shortly with next steps.');
+            // Here you would typically send the form data to your backend
+        });
+
+        // FAQ functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
