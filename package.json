@@ -1,0 +1,21 @@
+{
+  "name": "ailrb-study",
+  "version": "1.0.0",
+  "description": "AI Literature Review Benchmark Study",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve",
+    "build": "echo 'Static HTML - No build required'",
+    "start": "npx serve"
+  },
+  "keywords": [
+    "research",
+    "ai",
+    "literature-review",
+    "academic"
+  ],
+  "author": "AILRB Research Team",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
